@@ -12,7 +12,20 @@ test/tmp
 test/version_tmp
 tmp
 
+# Mac
+.DS_Store
+.DS_STORE
+
+# RVM
+.rvmrc
+
+# Bundler
+Gemfile.lock
+
 # YARD artifacts
 .yardoc
 _yardoc
 doc/
+
+# Project
+lib/generators/templates/loopia.yml
