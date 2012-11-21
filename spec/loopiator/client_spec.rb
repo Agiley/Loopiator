@@ -11,7 +11,7 @@ describe "Loopiator Api Client"  do
         
         Loopiator::Client.any_instance.expects(:set_config).at_least_once.returns(config)
         
-        @client = Loopiator::Client.new(config[:username], config[:password], config[:endpoint])
+        @client = Loopiator::Client.new(config)
       end
 
       it "should have a username set" do

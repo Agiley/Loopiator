@@ -8,28 +8,37 @@ module Loopiator
   class Client
     attr_accessor :config, :client, :username, :password, :endpoint
 
-  	def initialize(username = nil, password = nil, endpoint = nil)
-  		@config       =   nil
-  		set_config
+  	def initialize(options = {})
+  		@config       =   set_config
       
-  		@username     =   username   ||  @config.fetch("username", nil)
-  		@password     =   password   ||  @config.fetch("password", nil)
-  		@endpoint     =   endpoint   ||  @config.fetch("endpoint", nil)
+      options.symbolize_keys!
+      @config.merge!(options)
+      
+  		@username     =   @config.fetch(:username, nil)
+  		@password     =   @config.fetch(:password, nil)
+  		@endpoint     =   @config.fetch(:endpoint, nil)
   		
-  		set_client
+  		timeout       =   options.fetch(:timeout, 500)
+  		
+  		set_client(timeout)
   	end
 
   	def set_config
   	  rails_env     =   defined?(Rails) ? Rails.env : "development"
-  	  @config     ||=   YAML.load_file(File.join(Rails.root, "config/loopia.yml"))[rails_env] if defined?(Rails)
-      @config     ||=   YAML.load_file(File.join(File.dirname(__FILE__), "../generators/templates/loopia.yml"))[rails_env] rescue nil
-      @config     ||=   YAML.load_file(File.join(File.dirname(__FILE__), "../generators/templates/loopia.template.yml"))[rails_env] rescue nil
-      @config     ||=   {}
+  	  config      ||=   YAML.load_file(File.join(Rails.root, "config/loopia.yml"))[rails_env] if defined?(Rails)
+      config      ||=   YAML.load_file(File.join(File.dirname(__FILE__), "../generators/templates/loopia.yml"))[rails_env] rescue nil
+      config      ||=   YAML.load_file(File.join(File.dirname(__FILE__), "../generators/templates/loopia.template.yml"))[rails_env] rescue nil
+      config      ||=   {}
+      
+      config.symbolize_keys!
+      
+      return config
   	end
   	
-  	def set_client
+  	def set_client(timeout = 500)
   	  @client = XMLRPC::Client.new_from_uri(@endpoint)
   	  @client.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
+  	  @client.timeout = timeout
   	  @client
   	end
   	
