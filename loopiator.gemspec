@@ -24,14 +24,15 @@ Gem::Specification.new do |s|
  Rakefile
  lib/generators/loopiator/loopiator_generator.rb
  lib/generators/templates/loopia.template.yml
- lib/loopiator/logger.rb
- lib/loopiator/domains.rb
+ lib/loopiator.rb
  lib/loopiator/client.rb
+ lib/loopiator/domains.rb
+ lib/loopiator/logger.rb
  lib/loopiator/railtie.rb
  loopiator.gemspec
- spec/spec_helper.rb
  spec/loopiator/client_spec.rb
  spec/loopiator/domains_spec.rb
+ spec/spec_helper.rb
  ]
  # = MANIFEST =
 
