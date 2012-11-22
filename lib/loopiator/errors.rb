@@ -9,7 +9,7 @@ module Loopiator
   
   class RateLimitError < ApiError
     def message
-      "You've reached the number of allowed API-requests within the given time period. Please wait a bit and then retry again."
+      "You've reached the number of allowed API-requests within the given time period. Please wait a bit and then try again."
     end
   end
   
