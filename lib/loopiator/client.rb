@@ -9,7 +9,6 @@ module Loopiator
     attr_accessor :config, :client, :username, :password, :endpoint
     
     include Loopiator::Logger
-  	include Loopiator::Response
     
   	def initialize(options = {})
   		@config       =   set_config
@@ -46,7 +45,26 @@ module Loopiator
   	end
   	
   	def call(rpc_method, *args)
-  	  parse_response(@client.call(rpc_method, @username, @password, *args))
+  	  response    =   ""
+  	  
+  	  begin
+        response  =   @client.call(rpc_method, @username, @password, *args)
+        response  =   response.downcase.to_sym
+        
+      rescue EOFError => eof_error
+        raise Loopiator::ConnectionError
+      end
+
+      case response
+        when :ok                then  return response
+        when :domain_occupied   then  return response
+        when :auth_error        then  raise Loopiator::AuthError
+        when :rate_limited      then  raise Loopiator::RateLimitError
+        when :bad_indata        then  raise Loopiator::InvalidParameterError
+        when :unknown_error     then  raise Loopiator::UnknownError
+        else
+          return response
+      end
   	end
 
   	include Loopiator::Domains
