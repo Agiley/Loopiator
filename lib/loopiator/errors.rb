@@ -21,13 +21,13 @@ module Loopiator
   
   class UnknownError < ApiError
     def message
-      "An unknown error occurred while trying to request the API."
+      "An unknown error occurred while trying to request data from the API."
     end
   end
   
   class ConnectionError < ApiError
     def message
-      "An unknown connection error occurred while trying to request the API"
+      "An unknown connection error occurred while trying to connect to the API."
     end
   end
 end
