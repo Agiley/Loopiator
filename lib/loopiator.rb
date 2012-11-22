@@ -8,6 +8,10 @@ module Loopiator
   end
 
   require File.join(File.dirname(__FILE__), 'loopiator/logger')
+  require File.join(File.dirname(__FILE__), 'loopiator/errors')
+  
+  require File.join(File.dirname(__FILE__), 'loopiator/response')
+  
   require File.join(File.dirname(__FILE__), 'loopiator/domains')
 
   require File.join(File.dirname(__FILE__), 'loopiator/client')

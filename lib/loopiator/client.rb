@@ -7,7 +7,10 @@ require 'simpleidn'
 module Loopiator
   class Client
     attr_accessor :config, :client, :username, :password, :endpoint
-
+    
+    include Loopiator::Logger
+  	include Loopiator::Response
+    
   	def initialize(options = {})
   		@config       =   set_config
       
@@ -43,10 +46,9 @@ module Loopiator
   	end
   	
   	def call(rpc_method, *args)
-  	  @client.call(rpc_method, @username, @password, *args)
+  	  parse_response(@client.call(rpc_method, @username, @password, *args))
   	end
-  	
-  	include Loopiator::Logger
+
   	include Loopiator::Domains
   end
 end

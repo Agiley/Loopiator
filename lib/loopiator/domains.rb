@@ -5,7 +5,7 @@ module Loopiator
       domain      =   SimpleIDN.to_ascii(domain)
       response    =   self.call("domainIsFree", domain)
       
-      return response.downcase.eql?("ok")
+      return response.eql?(:ok)
     end
     
   end

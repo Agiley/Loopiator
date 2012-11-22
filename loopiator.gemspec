@@ -24,10 +24,10 @@ Gem::Specification.new do |s|
  Rakefile
  lib/generators/loopiator/loopiator_generator.rb
  lib/generators/templates/loopia.template.yml
- lib/loopiator/extensions/hash.rb
  lib/loopiator.rb
  lib/loopiator/client.rb
  lib/loopiator/domains.rb
+ lib/loopiator/extensions/hash.rb
  lib/loopiator/logger.rb
  lib/loopiator/railtie.rb
  loopiator.gemspec
