@@ -31,7 +31,6 @@ Gem::Specification.new do |s|
  lib/loopiator/extensions/hash.rb
  lib/loopiator/logger.rb
  lib/loopiator/railtie.rb
- lib/loopiator/response.rb
  loopiator.gemspec
  spec/loopiator/client_spec.rb
  spec/loopiator/domains_spec.rb
