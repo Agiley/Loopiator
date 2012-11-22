@@ -27,9 +27,11 @@ Gem::Specification.new do |s|
  lib/loopiator.rb
  lib/loopiator/client.rb
  lib/loopiator/domains.rb
+ lib/loopiator/errors.rb
  lib/loopiator/extensions/hash.rb
  lib/loopiator/logger.rb
  lib/loopiator/railtie.rb
+ lib/loopiator/response.rb
  loopiator.gemspec
  spec/loopiator/client_spec.rb
  spec/loopiator/domains_spec.rb
