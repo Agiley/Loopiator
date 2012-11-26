@@ -49,13 +49,18 @@ module Loopiator
   	  
   	  begin
         response  =   @client.call(rpc_method, @username, @password, *args)
-        response  =   response.downcase.to_sym
         
       rescue EOFError => eof_error
         raise Loopiator::ConnectionError
       end
-
-      case response
+      
+      return response
+  	end
+  	
+  	def parse_status_response(response)
+  	  response  =   response.downcase.to_sym
+  	  
+  	  case response
         when :ok                then  return response
         when :domain_occupied   then  return response
         when :auth_error        then  raise Loopiator::AuthError
@@ -68,6 +73,7 @@ module Loopiator
   	end
 
   	include Loopiator::Domains
+  	include Loopiator::Credits
   end
 end
 
