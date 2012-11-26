@@ -26,13 +26,16 @@ Gem::Specification.new do |s|
  lib/generators/templates/loopia.template.yml
  lib/loopiator.rb
  lib/loopiator/client.rb
+ lib/loopiator/credits.rb
  lib/loopiator/domains.rb
  lib/loopiator/errors.rb
  lib/loopiator/extensions/hash.rb
  lib/loopiator/logger.rb
+ lib/loopiator/models/domain.rb
  lib/loopiator/railtie.rb
  loopiator.gemspec
  spec/loopiator/client_spec.rb
+ spec/loopiator/credits_spec.rb
  spec/loopiator/domains_spec.rb
  spec/spec_helper.rb
  ]
