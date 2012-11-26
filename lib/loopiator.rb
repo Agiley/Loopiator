@@ -1,5 +1,5 @@
 module Loopiator
-  VERSION = "0.0.1"
+  VERSION = "0.1.0"
 
   require File.join(File.dirname(__FILE__), 'loopiator/railtie') if defined?(Rails)
   
