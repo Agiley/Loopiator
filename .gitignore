@@ -18,6 +18,8 @@ tmp
 
 # RVM
 .rvmrc
+.ruby-version
+.ruby-gemset
 
 # Bundler
 Gemfile.lock

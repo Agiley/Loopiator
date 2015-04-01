@@ -76,4 +76,3 @@ module Loopiator
   	include Loopiator::Credits
   end
 end
-

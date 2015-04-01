@@ -30,4 +30,10 @@ module Loopiator
       "An unknown connection error occurred while trying to connect to the API."
     end
   end
+  
+  class DomainOccupiedError < ApiError
+    def message
+      "The domain is occupied."
+    end
+  end
 end

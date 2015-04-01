@@ -18,20 +18,23 @@ module Loopiator
       return domain
     end
     
-    def add_domain_to_account(domain_name, should_buy = false, customer_number = "")
-      response      =   parse_status_response(call("addDomainToAccount", customer_number, encode_domain(domain_name), should_buy))
+    def order_domain(domain_name, accept_terms: true, customer_number: "", raise_exception_on_occupied: false)
+      response      =   parse_status_response(call("orderDomain", customer_number, encode_domain(domain_name), accept_terms))
+      
+      raise Loopiator::DomainOccupiedError if (response.eql?(:domain_occupied) && raise_exception_on_occupied)
       
       return response.eql?(:ok)
     end
     
-    def purchase_domain(domain_name, customer_number = "")
-      success = false
+    def purchase_domain(domain_name, customer_number: "", raise_exception_on_occupied: false)
+      success       =   false
+      ordered       =   order_domain(domain_name, accept_terms: true, customer_number: customer_number, raise_exception_on_occupied: raise_exception_on_occupied)
       
-      if (add_domain_to_account(domain_name, true, customer_number))
-        domain = get_domain(domain_name, customer_number)
+      if (ordered)
+        domain      =   get_domain(domain_name, customer_number)
         
-        if (domain && domain.needs_to_be_paid? && domain.reference_number != nil && domain.reference_number != "")
-          success = pay_invoice_using_credits(domain.reference_number, customer_number)
+        if (domain && domain.needs_to_be_paid? && !domain.reference_number.nil? && !domain.reference_number.empty?)
+          success   =   pay_invoice_using_credits(domain.reference_number, customer_number)
         end
       end
       
