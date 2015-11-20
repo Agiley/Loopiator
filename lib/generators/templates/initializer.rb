@@ -1,4 +1,4 @@
 Loopiator.configure do |config|
-  config.username = <%= username %>
-  config.password = <%= password %>
+  config.username = '<%= username %>'
+  config.password = '<%= password %>'
 end

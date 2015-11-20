@@ -18,7 +18,7 @@ module Loopiator
           exit
         end
         
-        template 'initializer.rb', 'config/initializers/loopiator.rb', assigns: { username: "'#{username}'", password: "'#{password}'" }
+        template 'initializer.rb', 'config/initializers/loopiator.rb', assigns: { username: username, password: password }
       end
       
       def loopiator_already_configured?
