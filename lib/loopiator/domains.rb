@@ -7,7 +7,7 @@ module Loopiator
       return response.eql?(:ok)
     end
     
-    def get_domain(domain_name, customer_number = "")
+    def get_domain(domain_name, customer_number: "")
       domain        =   nil
       response      =   call("getDomain", customer_number, encode_domain(domain_name))
       
@@ -31,7 +31,7 @@ module Loopiator
       ordered       =   order_domain(domain_name, accept_terms: true, customer_number: customer_number, raise_exception_on_occupied: raise_exception_on_occupied)
       
       if (ordered)
-        domain      =   get_domain(domain_name, customer_number)
+        domain      =   get_domain(domain_name, customer_number: customer_number)
         
         if (domain && domain.needs_to_be_paid? && !domain.reference_number.nil? && !domain.reference_number.empty?)
           success   =   pay_invoice_using_credits(domain.reference_number, customer_number)
@@ -43,7 +43,7 @@ module Loopiator
     
     private
     def encode_domain(domain_name)
-      SimpleIDN.to_ascii(domain_name)
+      Loopiator::Utilities.encode_domain(domain_name)
     end
     
   end

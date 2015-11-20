@@ -8,24 +8,24 @@ describe "Domain Management -"  do
     @client = Loopiator::Client.new
   end
   
-  describe "When checking domain availability:" do
-    
+  context "When checking domain availability" do
     it "I should be able to check that a domain is available" do
-    	@client.domain_is_free('dsadsadsadsadsadsadasdas.se').should == true
+      expect(@client).to receive(:domain_is_free).with('dsadsadsadsadsadsadasdas.se').and_return(true)
+      expect(@client.domain_is_free('dsadsadsadsadsadsadasdas.se')).to be == true
     end
     
     it "I should be able to check if a domain is not available" do
-    	@client.domain_is_free('aftonbladet.se').should == false
+      expect(@client).to receive(:domain_is_free).with('aftonbladet.se').and_return(false)
+      expect(@client.domain_is_free('aftonbladet.se')).to be == false
     end
     
     it "I should be able to check if an IDN-domain is available" do
-    	@client.domain_is_free('såhärtestarmanenidndomänkanske.se').should == true
+      expect(@client).to receive(:domain_is_free).with('såhärtestarmanenidndomänkanske.se').and_return(true)
+      expect(@client.domain_is_free('såhärtestarmanenidndomänkanske.se')).to be == true
     end
-
   end
   
-  describe "When managing my domains:" do
-    
+  context "When managing domains" do
     it "I should be able to check the details for a domain that I own" do
     	hash        =   {"paid"             =>  1,
     	                 "unpaid_amount"    =>  0,
@@ -38,14 +38,14 @@ describe "Domain Management -"  do
     	                
     	mock        =   Loopiator::Models::Domain.new(hash)
     	
-    	@client.expects(:get_domain).with('testdomain.se').once.returns(mock)
-    	
+      expect(@client).to receive(:get_domain).with('testdomain.se').and_return(mock)
+      
     	domain      =   @client.get_domain('testdomain.se')
     	
-    	domain.paid?.should               ==  true
-    	domain.needs_to_be_paid?.should   ==  false
-    	domain.registered?.should         ==  true
-    	domain.reference_number.should    ==  "999999"
+    	expect(domain.paid?).to be              ==  true
+      expect(domain.needs_to_be_paid?).to be  ==  false
+    	expect(domain.registered?).to be        ==  true
+      expect(domain.reference_number).to be   ==  "999999"
     end
     
     it "I should be able to see that a domain hasn't been paid for yet." do
@@ -60,16 +60,16 @@ describe "Domain Management -"  do
     	                
     	mock        =   Loopiator::Models::Domain.new(hash)
     	
-    	@client.expects(:get_domain).with('testdomain.se').once.returns(mock)
-    	
+      
+      expect(@client).to receive(:get_domain).with('testdomain.se').and_return(mock)
+      
     	domain      =   @client.get_domain('testdomain.se')
     	
-    	domain.paid?.should               ==  false
-    	domain.needs_to_be_paid?.should   ==  true
-    	domain.unpaid_amount.should       ==  99
-    	domain.reference_number.should    ==  "1111111"
+    	expect(domain.paid?).to be              ==  false
+      expect(domain.needs_to_be_paid?).to be  ==  true
+    	expect(domain.unpaid_amount).to be      ==  99
+      expect(domain.reference_number).to be   ==  "1111111"
     end
-
   end
   
 end

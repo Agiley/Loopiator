@@ -15,17 +15,17 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'mocha'
 
   # = MANIFEST =
  s.files = %w[
  Gemfile
  README.md
  Rakefile
- lib/generators/loopiator/loopiator_generator.rb
- lib/generators/templates/loopia.template.yml
+ lib/generators/loopiator_generator.rb
+ lib/generators/templates/initializer.rb
  lib/loopiator.rb
  lib/loopiator/client.rb
+ lib/loopiator/configuration.rb
  lib/loopiator/credits.rb
  lib/loopiator/domains.rb
  lib/loopiator/errors.rb
@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
  lib/loopiator/models/domain.rb
  lib/loopiator/railtie.rb
  loopiator.gemspec
- spec/loopiator/client_spec.rb
+ spec/loopiator/configuration_spec.rb
  spec/loopiator/credits_spec.rb
  spec/loopiator/domains_spec.rb
  spec/spec_helper.rb

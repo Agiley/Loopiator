@@ -6,49 +6,25 @@ require 'simpleidn'
 
 module Loopiator
   class Client
-    attr_accessor :config, :client, :username, :password, :endpoint
+    attr_accessor :client
     
     include Loopiator::Logger
     
-  	def initialize(options = {})
-  		@config       =   set_config
-      
-      options.symbolize_keys!
-      @config.merge!(options)
-      
-  		@username     =   @config.fetch(:username, nil)
-  		@password     =   @config.fetch(:password, nil)
-  		@endpoint     =   @config.fetch(:endpoint, nil)
-  		
-  		timeout       =   options.fetch(:timeout, 500)
-  		
-  		set_client(timeout)
-  	end
-
-  	def set_config
-  	  rails_env     =   defined?(Rails) ? Rails.env : "development"
-  	  config      ||=   YAML.load_file(File.join(Rails.root, "config/loopia.yml"))[rails_env] if defined?(Rails)
-      config      ||=   YAML.load_file(File.join(File.dirname(__FILE__), "../generators/templates/loopia.yml"))[rails_env] rescue nil
-      config      ||=   YAML.load_file(File.join(File.dirname(__FILE__), "../generators/templates/loopia.template.yml"))[rails_env] rescue nil
-      config      ||=   {}
-      
-      config.symbolize_keys!
-      
-      return config
+  	def initialize(connection_options = nil)
+      set_client(connection_options)
   	end
   	
-  	def set_client(timeout = 500)
-  	  @client = XMLRPC::Client.new_from_uri(@endpoint)
-  	  @client.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
-  	  @client.timeout = timeout
-  	  @client
+  	def set_client(connection_options = nil)
+  	  self.client           =   XMLRPC::Client.new_from_hash(generate_connection_options(connection_options))
+      self.client.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
+  	  self.client
   	end
   	
   	def call(rpc_method, *args)
-  	  response    =   ""
+  	  response    =   nil
   	  
   	  begin
-        response  =   @client.call(rpc_method, @username, @password, *args)
+        response  =   self.client.call(rpc_method, Loopiator.configuration.username, Loopiator.configuration.password, *args)
         
       rescue EOFError => eof_error
         raise Loopiator::ConnectionError
@@ -58,7 +34,7 @@ module Loopiator
   	end
   	
   	def parse_status_response(response)
-  	  response  =   response.downcase.to_sym
+  	  response    =   response.downcase.to_sym
   	  
   	  case response
         when :ok                then  return response
@@ -74,5 +50,21 @@ module Loopiator
 
   	include Loopiator::Domains
   	include Loopiator::Credits
+    
+    private
+      def generate_connection_options(connection_options = nil)
+        connection_options    ||=   {
+          host:         Loopiator.configuration.host,
+          path:         Loopiator.configuration.path,
+          port:         Loopiator.configuration.port,
+          use_ssl:      Loopiator.configuration.use_ssl,
+          timeout:      Loopiator.configuration.timeout,
+          proxy_host:   Loopiator.configuration.proxy_host,
+          proxy_port:   Loopiator.configuration.proxy_port,
+          user:         Loopiator.configuration.proxy_user,
+          password:     Loopiator.configuration.proxy_password,
+        }
+      end
+      
   end
 end
