@@ -7,14 +7,15 @@ module Loopiator
     
     include Loopiator::Logger
     
-  	def initialize(connection_options = nil)
+  	def initialize(connection_options = {})
       set_client(connection_options)
   	end
   	
-  	def set_client(connection_options = nil)
-  	  self.client           =   XMLRPC::Client.new_from_hash(generate_connection_options(connection_options))
-      self.client.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
-  	  self.client
+  	def set_client(connection_options = {})
+      connection_options  =   generate_connection_options(connection_options)
+      
+  	  self.client         =   XMLRPC::Client.new_from_hash(connection_options)
+      set_client_options(connection_options)
   	end
   	
   	def call(rpc_method, *args)
@@ -49,18 +50,35 @@ module Loopiator
   	include Loopiator::Credits
     
     private
-      def generate_connection_options(connection_options = nil)
-        connection_options    ||=   {
-          host:         Loopiator.configuration.host,
-          path:         Loopiator.configuration.path,
-          port:         Loopiator.configuration.port,
-          use_ssl:      Loopiator.configuration.use_ssl,
-          timeout:      Loopiator.configuration.timeout,
-          proxy_host:   Loopiator.configuration.proxy_host,
-          proxy_port:   Loopiator.configuration.proxy_port,
-          user:         Loopiator.configuration.proxy_user,
-          password:     Loopiator.configuration.proxy_password,
+      def generate_connection_options(connection_options = {})
+        default_options = {
+          host:             Loopiator.configuration.host,
+          path:             Loopiator.configuration.path,
+          port:             Loopiator.configuration.port,
+          
+          user:             Loopiator.configuration.auth_user,
+          password:         Loopiator.configuration.auth_password,
+          
+          use_ssl:          Loopiator.configuration.use_ssl,
+          timeout:          Loopiator.configuration.timeout,
+          
+          proxy_host:       Loopiator.configuration.proxy_host,
+          proxy_port:       Loopiator.configuration.proxy_port,
+          proxy_user:       Loopiator.configuration.proxy_user,
+          proxy_password:   Loopiator.configuration.proxy_password,
         }
+        
+        default_options.merge(connection_options)
+      end
+      
+      def set_client_options(connection_options = {})
+        self.client.instance_variable_get(:@http).instance_variable_set(:@verify_mode, OpenSSL::SSL::VERIFY_NONE)
+        
+        #Seems to be the only way to set the proxy user / password for Ruby's XMLRPC?
+        proxy_user          =   connection_options.fetch(:proxy_user, nil)
+        proxy_password      =   connection_options.fetch(:proxy_password, nil)
+        self.client.instance_variable_get(:@http).instance_variable_set(:@proxy_user, proxy_user)     if (proxy_user && !proxy_user.empty?)
+        self.client.instance_variable_get(:@http).instance_variable_set(:@proxy_pass, proxy_password) if (proxy_password && !proxy_password.empty?)
       end
       
   end

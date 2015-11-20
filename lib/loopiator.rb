@@ -21,11 +21,11 @@ module Loopiator
   end
   
   def self.reset
-    @configuration = Configuration.new
+    @configuration = nil
   end
   
   def self.configure
-    yield(self.configuration)
+    yield(configuration)
   end
   
 end
