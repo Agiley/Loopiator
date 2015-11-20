@@ -20,7 +20,7 @@ module Loopiator
     @configuration ||= Configuration.new
   end
   
-  def self.reconfigure
+  def self.reset
     @configuration = Configuration.new
   end
   

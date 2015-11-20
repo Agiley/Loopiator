@@ -1,6 +1,3 @@
-require 'uri'
-require 'cgi'
-require 'rubygems'
 require 'xmlrpc/client'
 require 'simpleidn'
 

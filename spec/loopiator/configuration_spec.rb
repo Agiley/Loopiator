@@ -30,7 +30,7 @@ describe "Loopiator Configuration"  do
     end
     
     context "Using custom configuration" do
-      before(:each) do
+      before :each do
         Loopiator.configure do |config|
           config.username     =   "test_user"
           config.password     =   "test_password"
@@ -38,6 +38,10 @@ describe "Loopiator Configuration"  do
           config.proxy_host   =   "192.1.1.1"
           config.proxy_port   =   8080
         end
+      end
+      
+      after :each do
+        Loopiator.reset
       end
 
       it "should have a custom username set" do

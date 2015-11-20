@@ -2,10 +2,14 @@
 
 require File.expand_path('../../spec_helper', __FILE__)
 
-describe "Credits Management -"  do
+describe "Credits Management"  do
   
-  before(:each) do
+  before :each do
     @client = Loopiator::Client.new
+  end
+  
+  after :each do
+    Loopiator.reset
   end
   
   context "When managing my credits:" do
