@@ -2,7 +2,7 @@
 Ruby gem for Interacting with Loopia.se's XML RPC API.
 
 ## Installation
-Add the loopiator to your Gemfile and run bundle update:
+Add the gem to your Gemfile and run bundle update:
 ```ruby
 gem 'loopiator'
 bundle update
