@@ -33,11 +33,13 @@ Gem::Specification.new do |s|
  lib/loopiator/logger.rb
  lib/loopiator/models/domain.rb
  lib/loopiator/railtie.rb
+ lib/loopiator/utilities.rb
  loopiator.gemspec
  spec/loopiator/configuration_spec.rb
  spec/loopiator/credits_spec.rb
  spec/loopiator/domains_spec.rb
  spec/spec_helper.rb
+ spec/support/helpers.rb
  ]
  # = MANIFEST =
 
