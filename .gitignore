@@ -30,4 +30,4 @@ _yardoc
 doc/
 
 # Project
-lib/generators/templates/loopia.yml
+spec/support/credentials.yml

@@ -2,7 +2,7 @@
 
 require File.expand_path('../../spec_helper', __FILE__)
 
-describe "Domain Management -"  do
+describe "Domain Management"  do
   
   before(:each) do
     @client = Loopiator::Client.new
