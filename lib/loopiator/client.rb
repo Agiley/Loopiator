@@ -8,7 +8,7 @@ module Loopiator
     include Loopiator::Logger
     
   	def initialize(connection_options = {}, debug: false)
-      set_client(connection_options)
+      set_client(connection_options, debug: debug)
   	end
   	
   	def set_client(connection_options = {}, debug: false)
