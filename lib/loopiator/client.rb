@@ -7,14 +7,15 @@ module Loopiator
     
     include Loopiator::Logger
     
-  	def initialize(connection_options = {})
+  	def initialize(connection_options = {}, debug: false)
       set_client(connection_options)
   	end
   	
-  	def set_client(connection_options = {})
+  	def set_client(connection_options = {}, debug: false)
       connection_options  =   generate_connection_options(connection_options)
       
   	  self.client         =   XMLRPC::Client.new_from_hash(connection_options)
+      enable_debugging if debug
       set_client_options(connection_options)
   	end
   	
@@ -69,6 +70,10 @@ module Loopiator
         }
         
         default_options.merge(connection_options)
+      end
+      
+      def enable_debugging
+        self.client.instance_variable_get(:@http).set_debug_output($stderr)
       end
       
       def set_client_options(connection_options = {})
