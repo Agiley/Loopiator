@@ -18,6 +18,17 @@ module Loopiator
       return domain
     end
     
+    def get_domains(customer_number: "")
+      domains       =   []
+      response      =   call("getDomains", customer_number)
+      
+      response.each do |item|
+        domains    <<   Loopiator::Models::Domain.new(item)
+      end if (response && response.is_a?(Array))
+      
+      return domains
+    end
+    
     def order_domain(domain_name, accept_terms: true, customer_number: "", raise_exception_on_occupied: false)
       response      =   parse_status_response(call("orderDomain", customer_number, encode_domain(domain_name), accept_terms))
       
