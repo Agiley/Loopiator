@@ -7,11 +7,11 @@ module Loopiator
     
     include Loopiator::Logger
     
-  	def initialize(connection_options = {}, debug: false)
+  	def initialize(connection_options = {}, debug = false)
       set_client(connection_options, debug: debug)
   	end
   	
-  	def set_client(connection_options = {}, debug: false)
+  	def set_client(connection_options = {}, debug = false)
       connection_options  =   generate_connection_options(connection_options)
       
   	  self.client         =   XMLRPC::Client.new_from_hash(connection_options)
