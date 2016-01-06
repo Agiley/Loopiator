@@ -12,10 +12,6 @@ describe "Loopiator Configuration"  do
         expect(Loopiator.configuration.password).to be == nil
       end
       
-      it "should have a default host set" do
-        expect(Loopiator.configuration.host).to be == "api.loopia.se"
-      end
-      
       it "should have a default port set" do
         expect(Loopiator.configuration.port).to be == 443
       end
@@ -62,10 +58,6 @@ describe "Loopiator Configuration"  do
       
       it "should have a custom proxy port set" do
         expect(Loopiator.configuration.proxy_port).to be == 8080
-      end
-      
-      it "should have a default host set" do
-        expect(Loopiator.configuration.host).to be == "api.loopia.se"
       end
       
       it "should have a default port set" do
