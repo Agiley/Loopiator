@@ -35,12 +35,13 @@ module Loopiator
   	  response    =   response.downcase.to_sym
   	  
   	  case response
-        when :ok                then  return response
-        when :domain_occupied   then  return response
-        when :auth_error        then  raise Loopiator::AuthError
-        when :rate_limited      then  raise Loopiator::RateLimitError
-        when :bad_indata        then  raise Loopiator::InvalidParameterError
-        when :unknown_error     then  raise Loopiator::UnknownError
+        when :ok                  then  return response
+        when :domain_occupied     then  return response
+        when :auth_error          then  raise Loopiator::AuthError
+        when :rate_limited        then  raise Loopiator::RateLimitError
+        when :insufficient_funds  then  raise Loopiator::InsufficientFundsError
+        when :bad_indata          then  raise Loopiator::InvalidParameterError
+        when :unknown_error       then  raise Loopiator::UnknownError
         else
           return response
       end

@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 1.3.5") if s.respond_to? :required_rubygems_version=
 
   s.name = 'loopiator'
-  s.version = '0.3.6'
+  s.version = '0.3.7'
 
   s.homepage      =   "https://github.com/Agiley/Loopiator"
   s.email         =   "sebastian@agiley.se"

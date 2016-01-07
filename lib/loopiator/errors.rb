@@ -36,4 +36,10 @@ module Loopiator
       "The domain is occupied."
     end
   end
+  
+  class InsufficientFundsError < ApiError
+    def message
+      "Insufficient funds. Please top up your prepaid account."
+    end
+  end
 end
