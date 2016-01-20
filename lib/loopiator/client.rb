@@ -41,7 +41,9 @@ module Loopiator
         when :rate_limited        then  raise Loopiator::RateLimitError
         when :insufficient_funds  then  raise Loopiator::InsufficientFundsError
         when :bad_indata          then  raise Loopiator::InvalidParameterError
-        when :unknown_error       then  raise Loopiator::UnknownError
+        # :unknown_error will be returned when calling 'orderDomain' and the domain already exists in a customer account
+        # do not raise an error until Loopia has updated their API to add an additional error code specifically targeting this phenomena
+        #when :unknown_error       then  raise Loopiator::UnknownError
         else
           return response
       end
