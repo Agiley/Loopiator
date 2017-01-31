@@ -11,7 +11,7 @@ module Loopiator
       domain        =   nil
       response      =   call("getDomain", customer_number, encode_domain(domain_name))
       
-      if (response && response.is_a?(Hash))
+      if response && response.is_a?(Hash)
         domain      =   Loopiator::Models::Domain.new(response)
       end
       
@@ -24,7 +24,7 @@ module Loopiator
       
       response.each do |item|
         domains    <<   Loopiator::Models::Domain.new(item)
-      end if (response && response.is_a?(Array))
+      end if response && response.is_a?(Array)
       
       return domains
     end
@@ -51,10 +51,16 @@ module Loopiator
       return success
     end
     
-    private
-    def encode_domain(domain_name)
-      Loopiator::Utilities.encode_domain(domain_name)
+    def update_nameservers(domain, nameservers = ['ns1.loopia.se', 'ns2.loopia.se'], customer_number: "")
+      response      =   parse_status_response(call("updateDNSServers", customer_number, encode_domain(domain), nameservers))
+      
+      return response.eql?(:ok)
     end
+    
+    private
+      def encode_domain(domain_name)
+        Loopiator::Utilities.encode_domain(domain_name)
+      end
     
   end
 end

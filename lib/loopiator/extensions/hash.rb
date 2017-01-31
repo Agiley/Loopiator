@@ -6,4 +6,3 @@ class Hash
     self
   end
 end
-

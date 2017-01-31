@@ -1,4 +1,5 @@
 require 'xmlrpc/client'
+require File.join(File.dirname(__FILE__), 'patch') # Needed to convert <i4> to <int> - Loopia's XML RPC server won't accept <i4> as a valid method signature
 require 'simpleidn'
 
 module Loopiator
@@ -50,6 +51,7 @@ module Loopiator
   	end
 
   	include Loopiator::Domains
+    include Loopiator::Dns
   	include Loopiator::Credits
     
     private
