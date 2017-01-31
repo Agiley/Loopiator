@@ -12,7 +12,7 @@ require File.join(File.dirname(__FILE__), 'loopiator/credits')
 require File.join(File.dirname(__FILE__), 'loopiator/client')
 
 module Loopiator
-  VERSION     =   "0.3.8"
+  VERSION     =   "0.4.0"
   
   class << self
     attr_writer :configuration
