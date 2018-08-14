@@ -3,7 +3,7 @@ module Loopiator
         
     def get_zone_records(domain, subdomain, customer_number: "")
       records       =   []
-      response      =   call("getZoneRecords", customer_number, encode_domain(domain), subdomain)
+      response      =   parse_status_response(call("getZoneRecords", customer_number, encode_domain(domain), subdomain))
       
       response.each do |item|
         records    <<   Loopiator::Models::DnsRecord.new(item)
