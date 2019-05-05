@@ -57,6 +57,12 @@ module Loopiator
       return response.eql?(:ok)
     end
     
+    def remove_subdomain(domain, subdomain, customer_number: "")
+      response      =   parse_status_response(call("removeSubdomain", customer_number, encode_domain(domain), subdomain))
+      
+      return response.eql?(:ok)
+    end
+    
     def update_nameservers(domain, nameservers = ["ns1.loopia.se", "ns2.loopia.se"], customer_number: "")
       response      =   parse_status_response(call("updateDNSServers", customer_number, encode_domain(domain), nameservers))
       
